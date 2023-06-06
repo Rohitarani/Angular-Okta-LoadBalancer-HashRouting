@@ -28,4 +28,4 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Sample
 
-<img width="956" alt="image" src="https://github.com/Rohitarani/Angular-Okta-LoadBalancer-HashRouting/assets/38286634/fcd2cfe3-0ba4-4899-9039-8d78164b6dc4">
+<img width="749" alt="image" src="https://github.com/Rohitarani/Angular-Okta-LoadBalancer-HashRouting/assets/38286634/7b0f57d8-0da4-4b82-b87a-fb47913b86cd">
