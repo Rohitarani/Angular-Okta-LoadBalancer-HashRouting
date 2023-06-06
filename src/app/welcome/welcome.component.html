@@ -1,0 +1,25 @@
+<div class="welcome-container">
+  <div >
+    <h1 class="success-message">Successfully logged in!</h1>
+  </div>
+
+  <div class="content-container">
+    <h2>Welcome <span class="username"><i>{{ userName }}</i></span></h2>
+
+
+    <div class="profile-details">
+      <br>
+      <h4>Profile Details:</h4>
+      <ul>
+        <li><strong>Name:</strong> {{ userName }}</li>
+        <li><strong>Group:</strong> {{ userGroup }}</li>
+        <li><strong>Email ID:</strong> {{ userEmail }}</li>
+      </ul>
+    </div>
+
+    <button pButton type="button" label="Logout" (click)="signOut()" class="logout-button"></button>
+  </div>
+</div>
+
+
+

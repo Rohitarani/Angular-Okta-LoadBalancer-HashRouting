@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +7,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Okta-HashRouting-LoadBalancer';
+  isAuthenticated:boolean=false;
+  @HostListener('window:click', ['$event'])
+  @HostListener('window:mousemove', ['$event'])
+
+  onWindowClick(event: MouseEvent) {
+    if (!localStorage.getItem('userGroup')) {
+      window.location.reload();
+    }
+  }
 }

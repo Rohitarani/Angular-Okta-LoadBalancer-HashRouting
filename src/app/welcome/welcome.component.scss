@@ -1,0 +1,49 @@
+.welcome-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  align-items: center;
+  padding-top: 20px;
+}
+
+.content-container {
+  padding-top: 70px;
+  padding-bottom: 70px;
+  padding-left: 100px;
+  padding-right: 100px;
+  background: linear-gradient(to right, #d60270d1, #9b4f96e8, #0038a8d6);
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: #fff;
+}
+
+.success-message {
+  margin-bottom: 100px;
+  margin-top: 70px;
+  background: linear-gradient(#d60270, #9b4f96, #0038a8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.profile-details {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.profile-details h2 {
+  margin-bottom: 10px;
+}
+
+.logout-button {
+  margin-top: 20px;
+  background-color: rgb(255 255 255 / 42%);
+  color: #0038a8d6;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
