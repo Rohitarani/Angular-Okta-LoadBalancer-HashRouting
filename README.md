@@ -2,6 +2,8 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.4.
 
+To resolve the problem of "Access Denied" message after user authentication in an Angular application deployed on AWS S3 with a load balancer, the issue can be solved by implementing hash routing in Angular. Okta is used for user authentication, allowing users to securely authenticate and access the application. Hash routing in Angular ensures proper navigation within the application, bypassing the load balancer's default routing restrictions.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
