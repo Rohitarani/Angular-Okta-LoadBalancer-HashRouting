@@ -2,18 +2,19 @@ import { Injectable, Inject } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { OktaAuth } from '@okta/okta-auth-js';
 import { OKTA_AUTH } from '@okta/okta-angular';
-import {config} from './app.config';
+import {config} from '../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-
 export class OktaAuthService implements CanActivate {
 
-  constructor(@Inject(OKTA_AUTH) private oktaAuth: OktaAuth) { }
+  constructor(@Inject(OKTA_AUTH) private oktaAuth: OktaAuth) {}
 
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     const idToken = await this.oktaAuth.tokenManager.get('idToken');
-    if (idToken !== undefined) {
+
+    if (idToken) {
+      console.log(localStorage)
       const isExpired = await this.checkTokenExpiry();
       if (!isExpired) {
         return true;
@@ -26,48 +27,47 @@ export class OktaAuthService implements CanActivate {
     }
   }
 
-  addToken() {
-    return this.oktaAuth.token.parseFromUrl().then(tokens => {
-      if (tokens.tokens.idToken) {
-        console.log(tokens.tokens.idToken.claims);
-        localStorage.setItem('name',tokens.tokens.idToken.claims.name ?? '')
-        localStorage.setItem('email',tokens.tokens.idToken.claims.email ?? '')
-        localStorage.setItem('group',JSON.stringify(tokens.tokens.idToken.claims['groups']) ?? '')
-        this.oktaAuth.tokenManager.add("idToken", tokens.tokens.idToken);
+  async addToken(): Promise<boolean> {
+    try {
+      const tokens = await this.oktaAuth.token.parseFromUrl();
+      const idToken = tokens.tokens.idToken;
+
+      if (idToken) {
+        console.log(idToken.claims);
+        localStorage.setItem('name', idToken.claims.name ?? '');
+        localStorage.setItem('email', idToken.claims.email ?? '');
+        localStorage.setItem('group', JSON.stringify(idToken.claims['groups']) || '');
+
+        this.oktaAuth.tokenManager.add('idToken', idToken);
         return true;
-      }
-      else{
-        this.signIn();
+      } else {
+        await this.signIn();
         return false;
       }
-    }).catch(error => { this.signIn(); return false; });
+    } catch (error) {
+      await this.signIn();
+      return false;
+    }
   }
 
-  async signIn() {
-    const authenticated = await this.oktaAuth.tokenManager.get("idToken");
-    if (authenticated === undefined) {
+  async signIn(): Promise<void> {
+    const authenticated = await this.oktaAuth.tokenManager.get('idToken');
+
+    if (!authenticated) {
       sessionStorage.setItem('okta-app-url', config.oidc.redirectUri);
       this.oktaAuth.token.getWithRedirect({
         scopes: ['openid', 'email', 'profile'],
-        responseMode: "query",
-        responseType: "token"
+        responseMode: 'query',
+        responseType: 'token'
       });
-    }
-    else {
-      /* 'ngOnInit' is empty */
     }
   }
 
-  async checkTokenExpiry(){
-    const authenticated = await this.oktaAuth.tokenManager.get("idToken");
-    const currentTime = new Date();
-    const currentTimeMs = currentTime.getTime();
-    if(authenticated.expiresAt > currentTimeMs){
-      return true;
-    }
-    else{
-      return false;
-    }
+  async checkTokenExpiry(): Promise<boolean> {
+    const authenticated = await this.oktaAuth.tokenManager.get('idToken');
+    const currentTimeMs = new Date().getTime();
+
+    return authenticated.expiresAt > currentTimeMs;
   }
 
   async signOut(): Promise<void> {
