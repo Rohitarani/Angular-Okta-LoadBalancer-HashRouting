@@ -17,7 +17,7 @@ export class WelcomeComponent implements OnInit {
   public ngOnInit(): void {
     this.userName = localStorage.getItem('name');
     this.userEmail = localStorage.getItem('email');
-    const userGroupJson = localStorage.getItem('userGroup');
+    const userGroupJson = localStorage.getItem('group');
     if (userGroupJson !== null) {
       let a = userGroupJson.slice(1, -1);
       this.userGroup= a.split(',').map(str => str.replace(/"/g, ''));

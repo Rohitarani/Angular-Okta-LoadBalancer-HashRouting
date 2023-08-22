@@ -1,8 +1,8 @@
 
 export const config = {
   oidc: {
-    clientId: 'yqgwhjqwuy76873',
-    issuer: 'https://me/9897hgxjas',
+    clientId: '<id>',
+    issuer: 'https://<company>.cloud/oauth2/<id>',
     redirectUri: 'http://localhost:4200',
     scopes: ['openid', 'profile', 'email'],
   }
